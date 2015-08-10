@@ -7,6 +7,7 @@
 //
 
 #import "RZBDefines.h"
+#import "RZBRepresentation.h"
 
 @class RZBMockPeripheralManager;
 
@@ -19,7 +20,7 @@ typedef CBATTError (^RZBSimulatedDeviceRead)(CBATTRequest *request);
 @property (strong, nonatomic, readonly) NSUUID *identifier;
 @property (strong, nonatomic, readonly) CBPeripheralManager *peripheralManager;
 
-- (void)addBluetoothRepresentable:(id<RZBBluetoothRepresentable>)bluetoothRepresentable isPrimary:(BOOL)isPrimary;
+- (void)addBluetoothRepresentable:(id<RZBServiceRepresentable>)bluetoothRepresentable isPrimary:(BOOL)isPrimary;
 - (void)addReadCallbackForCharacteristicUUID:(CBUUID *)characteristicUUID handler:(RZBSimulatedDeviceRead)handler;
 
 @end

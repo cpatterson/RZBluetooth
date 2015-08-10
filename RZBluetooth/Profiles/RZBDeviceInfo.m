@@ -7,11 +7,16 @@
 //
 
 #import "RZBDeviceInfo.h"
-#import "CBPeripheral+RZBHelper.h"
+#import "CBPeripheral+RZBRepresentation.h"
 
 NSString *const RZBDeviceInfoModelNumberKey = @"modelNumber";
 
 @implementation RZBDeviceInfo
+
++ (id<RZBServiceRepresentation>)serviceRepresentation;
+{
+    return (id)self.class;
+}
 
 + (CBUUID *)serviceUUID
 {
@@ -33,48 +38,22 @@ NSString *const RZBDeviceInfoModelNumberKey = @"modelNumber";
     return CBCharacteristicPropertyRead;
 }
 
-+ (id)valueForKey:(NSString *)key fromData:(NSData *)data
++ (id<RZBCharacteristicSerializer>)serializerForKey:(NSString *)key
 {
-    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-}
-
-+ (NSData *)dataForKey:(NSString *)key fromValue:(NSString *)value
-{
-    NSAssert([value isKindOfClass:[NSString class]], @"Unexpected value type %@", [value class]);
-    return [value dataUsingEncoding:NSUTF8StringEncoding];
+    return [RZBCharacteristicSerializer utfStringSerializer];
 }
 
 @end
 
 @implementation CBPeripheral (RZBDeviceInfo)
 
+
 - (void)rzb_fetchDeviceInformationKeys:(NSArray *)deviceInfoKeys
                             completion:(RZBDeviceInfoCallback)completion
 {
-    NSDictionary *UUIDsByKey = [RZBDeviceInfo characteristicUUIDsByKey];
-    deviceInfoKeys = deviceInfoKeys ?: [UUIDsByKey allKeys];
-    RZBDeviceInfo *deviceInfo = [[RZBDeviceInfo alloc] init];
-    __block NSError *lastError = nil;
-    dispatch_group_t done = dispatch_group_create();
-    for (NSString *key in deviceInfoKeys) {
-        dispatch_group_enter(done);
-        [self rzb_readCharacteristicUUID:UUIDsByKey[key]
-                         serviceUUID:[RZBDeviceInfo serviceUUID]
-                          completion:^(CBCharacteristic *characteristic, NSError *error) {
-                              if (characteristic.value) {
-                                  [deviceInfo setValue:[RZBDeviceInfo valueForKey:key fromData:characteristic.value] forKey:key];
-                              }
-                              BOOL isDiscoveryError = ([[error domain] isEqualToString:RZBluetoothErrorDomain] &&
-                                                       [error code] == RZBluetoothDiscoverCharacteristicError);
-                              if (error && isDiscoveryError == NO) {
-                                  lastError = error;
-                              }
-                              dispatch_group_leave(done);
-                          }];
-    }
-    dispatch_group_notify(done, self.rzb_queue, ^{
-        completion(deviceInfo, lastError);
-    });
+    [self rzb_fetchRepresentation:[RZBDeviceInfo serviceRepresentation]
+                             keys:deviceInfoKeys
+                       completion:completion];
 }
 
 @end

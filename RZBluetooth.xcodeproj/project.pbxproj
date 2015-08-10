@@ -43,6 +43,8 @@
 		ABCD83801B73D77C00DA1162 /* CBPeripheral+RZBBattery.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCD837F1B73D77C00DA1162 /* CBPeripheral+RZBBattery.m */; };
 		ABCD83821B73DD2600DA1162 /* RZBSimulatedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCD83811B73DD2600DA1162 /* RZBSimulatedTests.m */; };
 		ABCD83841B73DE5D00DA1162 /* RZBProfileBatteryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCD83831B73DE5D00DA1162 /* RZBProfileBatteryTests.m */; };
+		ABCD839D1B76509800DA1162 /* RZBCharacteristicSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCD839B1B76509800DA1162 /* RZBCharacteristicSerializer.m */; };
+		ABCD83A11B7650F500DA1162 /* CBPeripheral+RZBRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCD83A01B7650F500DA1162 /* CBPeripheral+RZBRepresentation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,6 +157,11 @@
 		ABCD837F1B73D77C00DA1162 /* CBPeripheral+RZBBattery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CBPeripheral+RZBBattery.m"; sourceTree = "<group>"; };
 		ABCD83811B73DD2600DA1162 /* RZBSimulatedTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZBSimulatedTests.m; sourceTree = "<group>"; };
 		ABCD83831B73DE5D00DA1162 /* RZBProfileBatteryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZBProfileBatteryTests.m; sourceTree = "<group>"; };
+		ABCD839B1B76509800DA1162 /* RZBCharacteristicSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZBCharacteristicSerializer.m; sourceTree = "<group>"; };
+		ABCD839C1B76509800DA1162 /* RZBCharacteristicSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZBCharacteristicSerializer.h; sourceTree = "<group>"; };
+		ABCD839E1B7650AF00DA1162 /* RZBRepresentation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZBRepresentation.h; sourceTree = "<group>"; };
+		ABCD839F1B7650F500DA1162 /* CBPeripheral+RZBRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CBPeripheral+RZBRepresentation.h"; sourceTree = "<group>"; };
+		ABCD83A01B7650F500DA1162 /* CBPeripheral+RZBRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CBPeripheral+RZBRepresentation.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +242,7 @@
 				AB45C4C01B6BF88B00CC0166 /* RZBDefines.h */,
 				AB45C4C11B6BF88B00CC0166 /* RZBErrors.h */,
 				AB45C4C21B6BF88B00CC0166 /* RZBErrors.m */,
+				ABCD839A1B76507D00DA1162 /* Representation */,
 				AB45C4B61B6BF88B00CC0166 /* Command */,
 				AB45C4BF1B6BF88B00CC0166 /* Profiles */,
 			);
@@ -338,6 +346,18 @@
 				ABCD83771B71D1F900DA1162 /* RZBMockPeripheralManager.m */,
 			);
 			path = Mock;
+			sourceTree = "<group>";
+		};
+		ABCD839A1B76507D00DA1162 /* Representation */ = {
+			isa = PBXGroup;
+			children = (
+				ABCD839E1B7650AF00DA1162 /* RZBRepresentation.h */,
+				ABCD839F1B7650F500DA1162 /* CBPeripheral+RZBRepresentation.h */,
+				ABCD83A01B7650F500DA1162 /* CBPeripheral+RZBRepresentation.m */,
+				ABCD839C1B76509800DA1162 /* RZBCharacteristicSerializer.h */,
+				ABCD839B1B76509800DA1162 /* RZBCharacteristicSerializer.m */,
+			);
+			path = Representation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -455,6 +475,8 @@
 				AB45C4CA1B6BF88B00CC0166 /* RZBCommand.m in Sources */,
 				AB45C4CC1B6BF88B00CC0166 /* RZBUUIDPath.m in Sources */,
 				AB45C4CF1B6BF88B00CC0166 /* RZBCentralManager.m in Sources */,
+				ABCD83A11B7650F500DA1162 /* CBPeripheral+RZBRepresentation.m in Sources */,
+				ABCD839D1B76509800DA1162 /* RZBCharacteristicSerializer.m in Sources */,
 				AB45C4C81B6BF88B00CC0166 /* CBPeripheral+RZBExtension.m in Sources */,
 				AB45C4CD1B6BF88B00CC0166 /* RZBErrors.m in Sources */,
 				ABCD83801B73D77C00DA1162 /* CBPeripheral+RZBBattery.m in Sources */,

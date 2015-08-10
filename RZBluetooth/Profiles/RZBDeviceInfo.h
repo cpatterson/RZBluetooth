@@ -7,8 +7,9 @@
 //
 
 #import "RZBDefines.h"
+#import "RZBRepresentation.h"
 
-@interface RZBDeviceInfo : NSObject <RZBBluetoothRepresentable>
+@interface RZBDeviceInfo : NSObject <RZBServiceRepresentable>
 
 @property (copy, nonatomic) NSString *manufacturerName;
 @property (copy, nonatomic) NSString *modelNumber;

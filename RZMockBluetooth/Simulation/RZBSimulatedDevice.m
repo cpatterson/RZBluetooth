@@ -9,6 +9,7 @@
 #import "RZBSimulatedDevice.h"
 #import "RZBMockPeripheralManager.h"
 #import "RZBSimulatedCentral+Private.h"
+#import "RZBCharacteristicSerializer.h"
 
 @interface RZBSimulatedDevice ()
 
@@ -29,19 +30,22 @@
     return self;
 }
 
-- (CBMutableService *)serviceForRepresentable:(id<RZBBluetoothRepresentable>)representable isPrimary:(BOOL)isPrimary
+- (CBMutableService *)serviceForRepresentable:(id<RZBServiceRepresentable>)representable isPrimary:(BOOL)isPrimary
 {
     CBMutableService *service = [[CBMutableService alloc] initWithType:[representable.class serviceUUID] primary:isPrimary];
-
-    NSDictionary *characteristicsByUUID = [representable.class characteristicUUIDsByKey];
+    id <RZBServiceRepresentation> representation = [representable.class serviceRepresentation];
+    NSDictionary *characteristicsByUUID = [representation characteristicUUIDsByKey];
     NSMutableArray *characteristics = [NSMutableArray array];
     [characteristicsByUUID enumerateKeysAndObjectsUsingBlock:^(NSString *key, CBUUID *UUID, BOOL *stop) {
         CBCharacteristicProperties properties = [representable.class characteristicPropertiesForKey:key];
         CBAttributePermissions permissions = CBAttributePermissionsReadable | CBAttributePermissionsWriteable;
+        id<RZBCharacteristicSerializer> serialzer = [representation serializerForKey:key];
+
         id value = [representable valueForKey:key];
 
         if (value) {
-            NSData *data = [representable.class dataForKey:key fromValue:value];
+            NSData *data = [serialzer characteristicDataForObject:value error:NULL];
+            
             CBMutableCharacteristic *characteristic = [[CBMutableCharacteristic alloc] initWithType:UUID
                                                                                          properties:properties
                                                                                               value:data
@@ -53,7 +57,7 @@
     return service;
 }
 
-- (void)addBluetoothRepresentable:(id<RZBBluetoothRepresentable>)bluetoothRepresentable isPrimary:(BOOL)isPrimary
+- (void)addBluetoothRepresentable:(id<RZBServiceRepresentable>)bluetoothRepresentable isPrimary:(BOOL)isPrimary;
 {
     NSParameterAssert(bluetoothRepresentable);
     CBMutableService *service = [self serviceForRepresentable:bluetoothRepresentable isPrimary:isPrimary];
